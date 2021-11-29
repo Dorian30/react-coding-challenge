@@ -1,3 +1,4 @@
+import { useState, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import {
   Box,
@@ -10,16 +11,46 @@ import {
   Th,
   Td,
   TableCaption,
-  Spinner
+  Spinner,
+  Flex
 } from '@chakra-ui/react';
+import { ChevronUpIcon, ChevronDownIcon } from '@chakra-ui/icons';
 
 import useCountry from 'hooks/useCountry';
 import { ICountryStatus } from 'interfaces/ICountry';
 
+import { SORTING } from './constants';
+
+type TSortOrder = 'asc' | 'desc';
+
+enum SORT_TYPE {
+  DATE = 'Date',
+  CASES = 'Cases'
+}
+
 function Country() {
+  const [sort, setSort] = useState<{
+    type: SORT_TYPE;
+    order: TSortOrder;
+  }>({
+    type: SORT_TYPE.CASES,
+    order: 'desc'
+  });
   const { slug = '' } = useParams<'slug'>();
   const { data: country = [] as Array<ICountryStatus>, isLoading } =
     useCountry(slug);
+
+  const confirmedCases = useMemo(
+    () =>
+      country.sort((a, b) =>
+        SORTING[sort.type](
+          a[sort.type] as string,
+          b[sort.type] as string,
+          sort.order
+        )
+      ),
+    [country, sort.order, sort.type]
+  );
 
   return (
     <Box min-height="100vh" background="pickledBluewood" padding={5}>
@@ -47,14 +78,50 @@ function Country() {
           <TableCaption>Cases Confirmed</TableCaption>
           <Thead>
             <Tr>
-              <Th color="white">Date</Th>
-              <Th color="white" isNumeric>
-                Cases
+              <Th color="white">
+                <Flex alignItems="center">
+                  <Text marginRight={2}>Date</Text>
+                  {sort.type === SORT_TYPE.DATE && sort.order === 'asc' ? (
+                    <ChevronUpIcon
+                      _hover={{ cursor: 'pointer' }}
+                      onClick={() =>
+                        setSort({ type: SORT_TYPE.DATE, order: 'desc' })
+                      }
+                    />
+                  ) : (
+                    <ChevronDownIcon
+                      _hover={{ cursor: 'pointer' }}
+                      onClick={() =>
+                        setSort({ type: SORT_TYPE.DATE, order: 'asc' })
+                      }
+                    />
+                  )}
+                </Flex>
+              </Th>
+              <Th color="white">
+                <Flex alignItems="center" justifyContent="flex-end">
+                  <Text marginRight={2}>Cases</Text>
+                  {sort.type === SORT_TYPE.CASES && sort.order === 'asc' ? (
+                    <ChevronUpIcon
+                      _hover={{ cursor: 'pointer' }}
+                      onClick={() =>
+                        setSort({ type: SORT_TYPE.CASES, order: 'desc' })
+                      }
+                    />
+                  ) : (
+                    <ChevronDownIcon
+                      _hover={{ cursor: 'pointer' }}
+                      onClick={() =>
+                        setSort({ type: SORT_TYPE.CASES, order: 'asc' })
+                      }
+                    />
+                  )}
+                </Flex>
               </Th>
             </Tr>
           </Thead>
           <Tbody>
-            {country.map(({ Date: date, Cases: cases }) => (
+            {confirmedCases.map(({ Date: date, Cases: cases }) => (
               <Tr key={date}>
                 <Td>{new Date(date).toString()}</Td>
                 <Td isNumeric>{cases}</Td>
