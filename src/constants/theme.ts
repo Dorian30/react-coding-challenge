@@ -36,6 +36,11 @@ export default extendTheme({
           _hover: {
             bg: 'fruitSalad',
             borderColor: 'fruitSalad'
+          },
+          _loading: {
+            _hover: {
+              bg: 'fruitSalad'
+            }
           }
         }
       }
