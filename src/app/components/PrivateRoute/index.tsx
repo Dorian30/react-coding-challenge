@@ -1,20 +1,19 @@
 import { Navigate } from 'react-router-dom';
-import { Spinner, Flex } from '@chakra-ui/react';
+import { Spinner, Flex, Box } from '@chakra-ui/react';
 
-import React from 'react';
 import ROUTES from 'constants/routes';
-
 import useProfile from 'hooks/useProfile';
 
+import Sidebar from '../Sidebar';
 export interface IRoute {
   redirectTo?: ROUTES;
   children: JSX.Element;
 }
 
 function Route({ redirectTo = ROUTES.LOGIN, children }: IRoute) {
-  const { data: user, isLoading } = useProfile({});
+  const { isLoading, isError, data } = useProfile();
 
-  if (isLoading) {
+  if (isLoading && !isError) {
     return (
       <Flex
         height="100vh"
@@ -22,12 +21,19 @@ function Route({ redirectTo = ROUTES.LOGIN, children }: IRoute) {
         alignItems="center"
         justifyContent="center"
       >
-        <Spinner color="mirage" size="xl" />
+        <Spinner color="mirage" size="lg" />
       </Flex>
     );
   }
 
-  return user ? children : <Navigate to={redirectTo} />;
+  return data ? (
+    <>
+      <Sidebar />
+      <Box paddingLeft="300px">{children}</Box>
+    </>
+  ) : (
+    <Navigate to={redirectTo} />
+  );
 }
 
 export default Route;

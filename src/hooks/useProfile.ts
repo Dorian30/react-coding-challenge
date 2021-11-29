@@ -1,14 +1,10 @@
 import { useQuery } from 'react-query';
 
 import { QUERY_KEYS } from 'interfaces/IApi';
-import { getProfile } from 'services/UserServices';
+import { getProfile } from 'services/UserService';
 
-export interface IUseProfile {
-  enabled?: boolean;
-}
-
-function useProfile({ enabled = true }: IUseProfile) {
-  return useQuery([QUERY_KEYS.PROFILE], () => getProfile(), { enabled });
+function useProfile() {
+  return useQuery(QUERY_KEYS.PROFILE, () => getProfile());
 }
 
 export default useProfile;

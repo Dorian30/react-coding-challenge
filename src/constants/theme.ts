@@ -6,7 +6,8 @@ export default extendTheme({
     mirage: '#1A202C',
     pastelGreen: '#5FDD9D',
     fruitSalad: '#499167',
-    white: '#FFF'
+    white: '#FFF',
+    pickledBluewood: '#273248'
   },
   components: {
     Text: {

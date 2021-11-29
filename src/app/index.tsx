@@ -7,7 +7,7 @@ import theme from 'constants/theme';
 
 import Login from './screens/Login';
 import Countries from './screens/Countries';
-import Cases from './screens/Cases';
+import Country from './screens/Country';
 import PrivateRoute from './components/PrivateRoute';
 
 const queryClient = new QueryClient();
@@ -28,10 +28,10 @@ function App() {
               }
             />
             <Route
-              path={ROUTES.CONFIRMED_CASES}
+              path={ROUTES.COUNTRY}
               element={
                 <PrivateRoute>
-                  <Cases />
+                  <Country />
                 </PrivateRoute>
               }
             />
