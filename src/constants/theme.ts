@@ -7,7 +7,10 @@ export default extendTheme({
     pastelGreen: '#5FDD9D',
     fruitSalad: '#499167',
     white: '#FFF',
-    pickledBluewood: '#273248'
+    pickledBluewood: '#273248',
+    secondary: {
+      100: '#499167'
+    }
   },
   components: {
     Text: {

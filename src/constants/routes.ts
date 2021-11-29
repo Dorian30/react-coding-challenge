@@ -2,7 +2,7 @@ enum ROUTES {
   HOME = '/',
   LOGIN = '/login',
   COUNTRIES = '/countries',
-  COUNTRY = '/contry/:id'
+  COUNTRY = '/country/:slug'
 }
 
 export default ROUTES;

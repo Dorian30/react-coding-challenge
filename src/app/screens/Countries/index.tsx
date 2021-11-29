@@ -15,7 +15,7 @@ function Countries() {
           transition="all 0.2s"
           _hover={{ color: 'pastelGreen', cursor: 'pointer' }}
         >
-          <Link to={ROUTES.COUNTRY.replace(':id', Slug)}>{Country}</Link>
+          <Link to={ROUTES.COUNTRY.replace(':slug', Slug)}>{Country}</Link>
         </ListItem>
       ))}
     </UnorderedList>
