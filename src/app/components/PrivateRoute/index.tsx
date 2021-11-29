@@ -21,7 +21,7 @@ function Route({ redirectTo = ROUTES.LOGIN, children }: IRoute) {
         alignItems="center"
         justifyContent="center"
       >
-        <Spinner color="mirage" size="lg" />
+        <Spinner color="white" size="lg" />
       </Flex>
     );
   }
