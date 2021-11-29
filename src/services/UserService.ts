@@ -35,7 +35,6 @@ export const getProfile = () =>
   new Promise<IUser>((resolve, reject) =>
     setTimeout(() => {
       const user = JSON.parse(localStorage.getItem('user') as string) as IUser;
-      console.log({ user });
 
       if (!user) {
         reject('User not found');
