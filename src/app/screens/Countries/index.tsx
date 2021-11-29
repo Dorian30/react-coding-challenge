@@ -30,13 +30,15 @@ function Countries() {
         <Spinner color="white" size="lg" />
       ) : (
         <UnorderedList margin={0} color="white" px={5}>
-          {countries.map(({ Country, Slug }) => (
+          {countries.map(({ Country, Slug, ISO2 }) => (
             <ListItem
               key={Slug}
               transition="all 0.2s"
               _hover={{ color: 'pastelGreen', cursor: 'pointer' }}
             >
-              <Link to={ROUTES.COUNTRY.replace(':slug', Slug)}>{Country}</Link>
+              <Link
+                to={ROUTES.COUNTRY.replace(':slug', Slug)}
+              >{`${Country} - ${ISO2}`}</Link>
             </ListItem>
           ))}
         </UnorderedList>
