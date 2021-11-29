@@ -19,7 +19,6 @@ function App() {
         <Box minHeight="100vh" width="100vw" background="pickledBluewood">
           <Router>
             <Routes>
-              <Route path={ROUTES.LOGIN} element={<Login />} />
               <Route
                 path={ROUTES.COUNTRIES}
                 element={
@@ -36,6 +35,7 @@ function App() {
                   </PrivateRoute>
                 }
               />
+              <Route path="*" element={<Login />} />
             </Routes>
           </Router>
         </Box>
