@@ -29,6 +29,7 @@ enum SORT_TYPE {
 }
 
 function Country() {
+  // State
   const [sort, setSort] = useState<{
     type: SORT_TYPE;
     order: TSortOrder;
@@ -36,10 +37,20 @@ function Country() {
     type: SORT_TYPE.CASES,
     order: 'desc'
   });
-  const { slug = '' } = useParams<'slug'>();
-  const { data: country = [] as Array<ICountryStatus>, isLoading } =
-    useCountry(slug);
 
+  // Params
+  const { slug = '' } = useParams<'slug'>();
+
+  // Request
+  const {
+    data: country = [] as Array<ICountryStatus>,
+    isLoading,
+    isError
+  } = useCountry(slug);
+
+  console.log({ country, isError });
+
+  // Cases Sorting
   const confirmedCases = useMemo(
     () =>
       country.sort((a, b) =>
@@ -73,7 +84,7 @@ function Country() {
       </Text>
       {isLoading ? (
         <Spinner color="white" size="lg" />
-      ) : (
+      ) : confirmedCases.length ? (
         <Table variant="striped" color="white" colorScheme="secondary">
           <TableCaption>Cases Confirmed</TableCaption>
           <Thead>
@@ -135,6 +146,8 @@ function Country() {
             </Tr>
           </Tfoot>
         </Table>
+      ) : (
+        <Text color="white">There are no confirmed cases for this country</Text>
       )}
     </Box>
   );
