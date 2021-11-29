@@ -6,7 +6,7 @@ import { ICountry } from 'interfaces/ICountry';
 
 function useCountry(slug: ICountry['Slug']) {
   return useQuery(
-    [QUERY_KEYS.COUNTRY_STATUS],
+    [QUERY_KEYS.COUNTRY_STATUS, slug],
     () => getCountryStatus(slug).then(res => res.data),
     { enabled: Boolean(slug) }
   );
